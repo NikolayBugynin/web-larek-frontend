@@ -90,7 +90,7 @@ interface ISuccess {
 Интерфейс описывающий поля приходящие с сервера.
 
 ```
-export interface IProductItem {
+ interface IProductItem {
 	id: string;
 	title: string;
 	about: string;
@@ -102,7 +102,7 @@ export interface IProductItem {
 Интерфейс описывающий корзину
 
 ```
-export interface IBasketView {
+interface IBasketView {
 	items: HTMLElement[];
 	total: number | string;
 	selected: string[];
@@ -114,7 +114,7 @@ export interface IBasketView {
 
 Интерфейс описывающий внутренне состояние приложения
 
-export interface IAppState {
+ interface IAppState {
 	catalog: IProduct[];
 	basket: string[];
 	preview: string | null;
@@ -126,7 +126,7 @@ export interface IAppState {
 
 ```
 Интерфейс описывающий страницу
-export interface IPage {
+ interface IPage {
 	counter: number;
 	catalog: HTMLElement[];
 	locked: boolean;
