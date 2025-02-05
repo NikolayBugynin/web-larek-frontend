@@ -119,7 +119,7 @@ yarn build
 
 Класс `AppState` также реализует дополнительные методы для доступа к методам перечисленных выше свойств.
 
-### 2. Класс LotItem
+### 2. Класс ProductItem
 
 Класс `ProductItem` представляет данные отдельной карточки товара. Его структура определяется ответом от API-сервера с добавлением свойств и методов, реализующих логику взаимодействия с корзиной через вызовы `card:toBasket` и `basket:delete`.
 
@@ -159,7 +159,7 @@ yarn build
 - `email`: почта для связи.
 - `phone`: телефон для связи.
 
-### 5. Класс DeliveryForm
+### 5. Класс Order
 
 Класс `Order` наследуется от класса `Form` и представляет форму оформления заказа с информацией об способе оплаты и адресом доставки.
 
@@ -322,12 +322,7 @@ export enum Events {
 	VALIDATE_CONTACTS = 'contactsFormErrors:change', // Изменилось состояние валидации контактов
 	ORDER_SUBMIT = 'order:submit', //Заполнить телефон и почту
 	CONTACTS_SUBMIT = 'contacts:submit', // Завершения оплаты
-	// CHANGE_ORDER = '/^order..*:change/', // Изменились данные заказа
-	// CHANGE_CONTACTS = '/^contacts.[^:]*:change/,', // Изменили контакты
 }
-
-
-
 
 - [Ссылка на макет в Figma](https://www.figma.com/design/50YEgxY8IYDYj7UQu7yChb/%D0%92%D0%B5%D0%B1-%D0%BB%D0%B0%D1%80%D1%91%D0%BA?node-id=0-1&p=f&t=8MfF29PYRnV9zMt2-0)
 
