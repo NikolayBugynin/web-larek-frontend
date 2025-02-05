@@ -1,5 +1,6 @@
 import { Model } from './base/Model';
 import { FormErrors, IAppState, IProduct, IOrder, IOrderForm } from '../types';
+import { Events } from '../utils/constants';
 
 export interface IContactsForm {
 	email: string;
@@ -56,7 +57,7 @@ export class AppState extends Model<IAppState> {
 
 	setCatalog(items: IProduct[]) {
 		this.catalog = items.map((item) => new ProductItem(item, this.events));
-		this.emitChanges('items:changed', { catalog: this.catalog });
+		this.emitChanges(Events.LOADING_LOTS, { catalog: this.catalog });
 	}
 
 	setItems() {
@@ -65,22 +66,17 @@ export class AppState extends Model<IAppState> {
 
 	setPreview(item: ProductItem) {
 		this.preview = item.id;
-		this.emitChanges('preview:changed', item);
 	}
 
 	setOrderField(field: keyof IOrderForm, value: string) {
 		this.order[field] = value;
 
-		if (this.validateOrder()) {
-			this.events.emit('order:ready', this.order);
-		}
+		this.validateOrder();
 	}
 
 	setContactsField(field: keyof IContactsForm, value: string) {
 		this.order[field] = value;
-		if (this.validateContacts()) {
-			this.events.emit('contacts:ready', this.order);
-		}
+		this.validateContacts();
 	}
 
 	clearBasket() {
@@ -106,12 +102,19 @@ export class AppState extends Model<IAppState> {
 
 	validateContacts() {
 		const errors: typeof this.formErrors = {};
-		if (!this.order.email) {
-			errors.email = 'Необходимо указать email';
+
+		const email_regex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+.[a-zA-Z0-9_-]+)/;
+
+		const phone_regex = /^(\+|)(7|8)( |)\d{3}( |)\d{3}( |)(\d{2}( |)){2}$/;
+
+		if (!email_regex.test(this.order.email)) {
+			errors.email = 'Необходимо указать корректный email';
 		}
-		if (!this.order.phone) {
-			errors.phone = 'Необходимо указать телефон';
+
+		if (!phone_regex.test(this.order.phone)) {
+			errors.phone = 'Необходимо указать корректный телефон';
 		}
+
 		this.formErrors = errors;
 		this.events.emit('contactsFormErrors:change', this.formErrors);
 		return Object.keys(errors).length === 0;

@@ -13,8 +13,8 @@ export class Card extends Component<ICard> {
 	protected _image: HTMLImageElement;
 	protected _description: HTMLElement;
 	protected _price: HTMLElement;
-	protected _button: HTMLButtonElement;
 	protected _index: HTMLElement;
+	protected btn?: HTMLButtonElement;
 
 	constructor(
 		protected blockName: string,
@@ -27,13 +27,13 @@ export class Card extends Component<ICard> {
 		this._image = container.querySelector(`.${blockName}__image`);
 		this._price = ensureElement<HTMLElement>(`.${blockName}__price`, container);
 		this._category = container.querySelector(`.${blockName}__category`);
-		this._button = container.querySelector(`.${blockName}__button`);
+		this.btn = container.querySelector(`.${blockName}__button`);
 		this._description = container.querySelector(`.${blockName}__text`);
 		this._index = container.querySelector('.basket__item-index');
 
 		if (actions?.onClick) {
-			if (this._button) {
-				this._button.addEventListener('click', actions.onClick);
+			if (this.btn) {
+				this.btn.addEventListener('click', actions.onClick);
 			} else {
 				container.addEventListener('click', actions.onClick);
 			}
@@ -65,11 +65,12 @@ export class Card extends Component<ICard> {
 			this.setText(this._price, `${value} синапсов`);
 		} else {
 			this.setText(this._price, 'Бесценно');
+			this.setDisabled(this.btn, true);
 		}
+	}
 
-		if (this._button) {
-			this._button.disabled = !value;
-		}
+	set buttonDisabled(value: boolean) {
+		this.setDisabled(this.btn, value);
 	}
 
 	set image(value: string) {
@@ -90,6 +91,10 @@ export class Card extends Component<ICard> {
 
 	set category(value: string) {
 		this.setText(this._category, value);
-		this._category.classList.add(colorCategory[value]);
+		this.toggleClass(this._category, colorCategory[value], true);
+	}
+
+	set button(value: string) {
+		this.setText(this.btn, value);
 	}
 }

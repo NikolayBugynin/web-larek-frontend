@@ -1,7 +1,7 @@
-import { Component } from '../base/Component';
-import { createElement, ensureElement } from '../../utils/utils';
-import { EventEmitter } from '../base/events';
-import { IBasketView, IProductItem } from '../../types';
+import { Component } from './base/Component';
+import { createElement, ensureElement } from '../utils/utils';
+import { EventEmitter } from '../components/base/events';
+import { IBasketView, IProductItem } from '../types';
 
 export class Basket extends Component<IBasketView> {
 	protected _list: HTMLElement;
@@ -46,13 +46,19 @@ export class Basket extends Component<IBasketView> {
 				})
 			);
 			// Если корзина пуста, деактивируем кнопку покупки
-			this.setDisabled(this._button, true);
+			this.toggleButton(true);
 		}
 	}
 
+	toggleButton(state: boolean) {
+		this.setDisabled(this._button, state);
+	}
+
+	// Если в корзине есть товары, активируем кнопку покупки
 	set selected(items: IProductItem[]) {
-		// Если в корзине есть товары, активируем кнопку покупки
-		this.setDisabled(this._button, items.length === 0);
+		if (items.length !== 0) {
+			this.toggleButton(false);
+		}
 	}
 
 	set total(total: number | string) {

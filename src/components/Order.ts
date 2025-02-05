@@ -13,6 +13,7 @@ export class Order extends Form<IOrder> {
 	// Сссылки на внутренние элементы
 	protected _card: HTMLButtonElement;
 	protected _cash: HTMLButtonElement;
+	protected _address: HTMLInputElement;
 
 	// Конструктор принимает имя блока, родительский элемент и обработчик событий
 	constructor(
@@ -24,26 +25,36 @@ export class Order extends Form<IOrder> {
 
 		this._card = container.elements.namedItem('card') as HTMLButtonElement;
 		this._cash = container.elements.namedItem('cash') as HTMLButtonElement;
+		this._address = container.elements.namedItem('address') as HTMLInputElement;
 
-		if (this._cash) {
-			this._cash.addEventListener('click', () => {
-				this._cash.classList.add('button_alt-active');
-				this._card.classList.remove('button_alt-active');
-				this.onInputChange('payment', 'cash');
-			});
-		}
-		if (this._card) {
-			this._card.addEventListener('click', () => {
-				this._card.classList.add('button_alt-active');
-				this._cash.classList.remove('button_alt-active');
-				this.onInputChange('payment', 'card');
-			});
-		}
+		this._cash.addEventListener('click', () => {
+			this.toggleCash(true);
+			this.toggleCard(false);
+			this.onInputChange('payment', 'cash');
+		});
+
+		this._card.addEventListener('click', () => {
+			this.toggleCard(true);
+			this.toggleCash(false);
+			this.onInputChange('payment', 'card');
+		});
+	}
+
+	toggleCard(state = true) {
+		this.toggleClass(this._card, 'button_alt-active', state);
+	}
+
+	toggleCash(state = true) {
+		this.toggleClass(this._cash, 'button_alt-active', state);
 	}
 
 	// Метод, отключающий подсвечивание кнопок
 	disableButtons() {
-		this._cash.classList.remove('button_alt-active');
-		this._card.classList.remove('button_alt-active');
+		this.toggleClass(this._cash, 'button_alt-active', false);
+		this.toggleClass(this._card, 'button_alt-active', false);
+	}
+	clear() {
+		this.disableButtons();
+		this._address.value = '';
 	}
 }

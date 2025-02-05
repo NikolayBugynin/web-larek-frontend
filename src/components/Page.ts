@@ -31,9 +31,9 @@ export class Page extends Component<Page> {
 
 	set locked(value: boolean) {
 		if (value) {
-			this._wrapper.classList.add('page__wrapper_locked');
+			this.toggleClass(this._wrapper, 'button_alt-active', true);
 		} else {
-			this._wrapper.classList.remove('page__wrapper_locked');
+			this.toggleClass(this._wrapper, 'button_alt-active', false);
 		}
 	}
 }

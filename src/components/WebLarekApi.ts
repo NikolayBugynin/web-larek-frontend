@@ -2,8 +2,8 @@ import { Api, ApiListResponse } from './base/api';
 import { ICard, IOrder, ISuccess } from '../types';
 
 export interface IWebLArekAPI {
-	getProductList: () => Promise<ICard[]>;
 	getProductItem: (id: string) => Promise<ICard>;
+	getProductList: () => Promise<ICard[]>;
 	orderResult: (order: IOrder) => Promise<ISuccess>;
 }
 
