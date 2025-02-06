@@ -30,10 +30,6 @@ export class Page extends Component<Page> {
 	}
 
 	set locked(value: boolean) {
-		if (value) {
-			this.toggleClass(this._wrapper, 'button_alt-active', true);
-		} else {
-			this.toggleClass(this._wrapper, 'button_alt-active', false);
-		}
+		this.toggleClass(this._wrapper, 'page__wrapper_locked', value);
 	}
 }
