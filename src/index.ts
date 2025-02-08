@@ -245,4 +245,4 @@ api
 	.then(appData.setCatalog.bind(appData))
 	.catch(console.error);
 
-console.log(api.getProductList());
+
