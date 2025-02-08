@@ -106,7 +106,6 @@ events.on(Events.OPEN_LOT, (item: ProductItem) => {
 	});
 });
 
-
 // Открыть корзину
 events.on(Events.OPEN_BASKET, () => {
 	basket.items = appData.getBasketList().map((item, index) => {
@@ -245,3 +244,5 @@ api
 	.getProductList()
 	.then(appData.setCatalog.bind(appData))
 	.catch(console.error);
+
+console.log(api.getProductList());

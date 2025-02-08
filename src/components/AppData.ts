@@ -12,7 +12,6 @@ export type CatalogChangeEvent = {
 };
 
 export class ProductItem extends Model<IProduct> {
-	about: string;
 	description: string;
 	id: string;
 	image: string;

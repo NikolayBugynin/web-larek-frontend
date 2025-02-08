@@ -2,7 +2,6 @@
 export interface IProductItem {
 	id: string;
 	title: string;
-	about: string;
 	description?: string;
 	image: string;
 }
